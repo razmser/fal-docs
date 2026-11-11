@@ -1,0 +1,178 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://fal.ai/docs/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+> ## Agent Instructions
+> fal has two developer products. Model APIs run hosted models through an API key. fal Serverless deploys your own Python apps and models on fal GPUs.
+> To call a hosted model, start with the [Quick Start](../quickstart.md) and the [Model APIs overview](../model-apis/overview.md).
+> To deploy your own model with fal Serverless, start with these pages:
+> - [Introduction to Serverless](../serverless.md): What fal Serverless is and the three ways to deploy on it.
+> - [Installation & Setup](getting-started/installation.md): Install the fal CLI with `pip install fal` and authenticate.
+> - [Quick Start](getting-started/quick-start.md): Build a Hello World app, test it with `fal run`, and ship it with `fal deploy`.
+> - [App Lifecycle](app-lifecycle.md): How a `fal.App` goes from code to running runners.
+> - [Define Your Endpoints](endpoints-overview.md): Structure the API endpoints that your app exposes.
+> - [Deploy to Production](../deployment/deploy-to-production.md): Persistent URLs, authentication modes, and automatic scaling.
+> - [Machine Types](../deployment/machine-types.md): Available GPU and CPU machine types and how to choose one.
+> - [Pricing](../serverless/pricing.md): Per-second billing and the runner states that are billed.
+> - [Scaling Parameter Reference](../deployment/scale-your-application.md): Parameters that control runners, concurrency, and scale to zero.
+> - [Optimizing Cold Starts](../serverless/optimizations/optimize-cold-starts.md): Causes of cold starts and ways to make them shorter.
+> - [Examples](../../examples.md): Complete Serverless apps for image, video, audio, 3D, realtime, and multi-GPU workloads.
+> - [Migrating to fal](migrating-to-fal.md): Guides to move an existing Docker server or an app from another platform to fal.
+> fal Serverless deploys need access that the fal team approves for each account. Request access at https://fal.ai/dashboard/serverless-get-started.
+
+# Persistent Storage
+
+> Store model weights, datasets, and files on the shared /data volume that persists across runners and deployments.
+
+Every fal [runner](https://fal.ai/docs/documentation/getting-started/runners-and-caching) has access to a persistent `/data` volume. This is a distributed filesystem that is shared across all your apps and runners, linked to your fal account. Files written to `/data` persist between requests, across runner restarts, and across deployments. Use it to store model weights, datasets, configuration files, and any other data your apps need.
+
+The `/data` volume is the primary mechanism for avoiding repeated downloads during [cold starts](../serverless/optimizations/optimize-cold-starts.md). When a new runner starts and calls [setup()](app-lifecycle.md), it can load model weights from `/data` instead of downloading them from scratch. Because the volume is backed by a multi-layer cache (local NVME, distributed datacenter cache, and a global object store), subsequent reads are fast even on fresh nodes. For downloading files and model weights to `/data`, see [Downloading Models and Files](download-model-weights-and-files.md).
+
+## Using `/data` in Your App
+
+The `/data` directory is automatically mounted on every runner. Files you write there persist until you delete them. A common pattern is to check whether a file already exists before downloading it, so that only the first runner pays the download cost.
+
+```python theme={null}
+import fal
+from pathlib import Path
+
+DATA_DIR = Path("/data/mnist")
+
+class MyModel(fal.App):
+    requirements = ["torch>=2.0.0", "torchvision"]
+    machine_type = "GPU"
+
+    def setup(self):
+        import torch
+        from torchvision import datasets
+
+        already_present = DATA_DIR.exists()
+        if already_present:
+            print("Test data is already downloaded, skipping download!")
+
+        test_data = datasets.FashionMNIST(
+            root=DATA_DIR,
+            train=False,
+            download=not already_present,
+        )
+        ...
+```
+
+When you invoke this app for the first time, Torch downloads the test dataset to `/data`. Subsequent invocations, even those on new runners after the previous one shut down, skip the download and load directly from the cached files.
+
+> [!NOTE]
+>
+> For HuggingFace libraries, fal automatically sets `HF_HOME` to `/data/.cache/huggingface`, so all downloaded models from `transformers`, `diffusers`, and `huggingface_hub` are persisted without any extra configuration.
+
+Since `/data` is shared across all runners, you should be careful when multiple runners write to the same path simultaneously. The recommended pattern is to write to a temporary file beside the final destination, then use `os.rename` to move it into place. This makes the operation quasi-atomic and prevents other runners from reading an incomplete file.
+
+```python theme={null}
+import tempfile, os
+from pathlib import Path
+
+WEIGHTS_FILE = Path("/data/weights.safetensors")
+
+class MyModel(fal.App):
+    def setup(self):
+        if not WEIGHTS_FILE.exists():
+            with tempfile.NamedTemporaryFile(delete=False, dir="/data") as temp_file:
+                # download the weights to temp file
+                ...
+                os.rename(temp_file.name, WEIGHTS_FILE)
+        ...
+```
+
+One caveat for large artifacts: streaming a multi-GB download or build in small
+chunks directly to `/data` is much slower than one bulk copy. For weights-sized
+files, build the artifact on the runner's local disk first, then publish it to
+`/data` as a single bulk copy into a temporary path beside the destination,
+followed by the same atomic rename. The [Cut cold start
+times](../../examples/serverless/cut-cold-starts.md) example uses this
+local-build-then-publish pattern for a \~15 GB FlashPack pack.
+
+When loading model weights that span many files (as most `from_pretrained()` calls do), the sequential loading process does not take full advantage of the filesystem's parallel capabilities. You can speed it up significantly by pre-reading all the files in parallel before loading, which forces chunks into the local cache:
+
+```python theme={null}
+import subprocess
+
+MODEL_DIR = "/data/models/deepseek-ai"
+subprocess.call(
+    f"find -L '{MODEL_DIR}' -type f -print0 | xargs -0 -r -P 32 -n 1 cat > /dev/null",
+    shell=True
+)
+```
+
+For a dedicated guide on this technique, see [Parallel File Loading](../serverless/optimizations/parallel-file-loading.md).
+
+## Uploading Files to `/data`
+
+Outside of a running app, you can upload files to `/data` through the dashboard, CLI, REST API, or a one-off function.
+
+The [Dashboard > Files](https://fal.ai/dashboard/files) page provides a visual interface for dragging and dropping files, uploading from URLs, organizing folders, and managing your stored files.
+
+From the CLI, use `fal files` commands:
+
+```bash theme={null}
+fal files list
+fal files list models/
+fal files upload local-file.bin remote-path/file.bin
+```
+
+Uploads do not overwrite. Uploading to a path that already exists returns an error. Remove the existing file first with `fal files rm`.
+
+For direct integration, the Platform APIs provide endpoints for uploading, listing, and downloading files:
+
+* `POST /serverless/files/file/local/{target_path}` -- Upload a file directly. Suitable for small files only, and `target_path` cannot contain `/`.
+* `POST /serverless/files/file/url/{file}` -- Upload from a URL. fal fetches the file server-side, so it does not pass through your connection.
+* `GET /serverless/files/list` -- List files
+* `GET /serverless/files/file/{file}` -- Download a file
+
+See the [Platform API Reference](../../api-reference/platform-apis/for-serverless.md) for the full specification.
+
+To upload files programmatically (for example, downloading weights from a URL to `/data` before deploying your app), use a `@fal.function` that writes directly to the filesystem:
+
+```python theme={null}
+import fal
+
+@fal.function(machine_type="S")
+def upload_weights():
+    import urllib.request
+    urllib.request.urlretrieve(
+        "https://example.com/model-weights.safetensors",
+        "/data/models/weights.safetensors"
+    )
+    print("Weights uploaded to /data")
+```
+
+This runs on a fal runner with access to `/data`, so the downloaded file is immediately available to all your apps.
+
+### Upload size limits
+
+The maximum file size depends on how you upload it.
+
+| Method | Limit |
+| - | - |
+| `fal files upload` (CLI) | About 100 GB. Files above 10 MB upload as 10 MB parts, with a maximum of 10,000 parts. |
+| Dashboard drag and drop | 1 GB per file |
+| Upload from URL (dashboard or REST) | 5 GB, and the download must finish within 10 minutes |
+| `POST /serverless/files/file/local/{target_path}` | About 4.5 MB per request |
+| Writing from inside a running app | Not subject to these limits. The runner writes straight to the volume. |
+
+For model weights and other large files, write them from inside a running app as shown above, or use the CLI. To pull files into `/data` from inside your app, including caching, authenticated sources, and Hugging Face specifics, see [Downloading Models and Files](download-model-weights-and-files.md).
+
+## How It Works
+
+The `/data` volume is mounted at the same path on every runner in your account. It is eventually consistent, meaning that a file written by one runner may take a moment to appear on another runner in a different datacenter, though within the same datacenter propagation is nearly instant.
+
+| Property | Value |
+| - | - |
+| **Mount path** | `/data` on all runners |
+| **Shared across** | All apps and runners in your account |
+| **Consistency** | Eventually consistent |
+| **Persistence** | Files persist until you delete them |
+
+Maximum file size depends on how you upload. See [Upload size limits](#upload-size-limits).
+
+Under the hood, each file is split into 4MB chunks identified by their hash and saved to a global object store. A metadata layer tracks the mapping between file paths and chunks, making operations like renames atomic and fast. The volume features two caching layers: a local cache on the node using RAID 5 NVME drives (10-15 GB/s), and a distributed cache across all servers in the datacenter using a 100 Gbps network (6-8 GB/s). A cache miss at both levels falls through to the backing object store (1.5-8 GB/s). This is why parallel reads are so much faster than sequential ones: each chunk can be fetched from a different cache node simultaneously.
+
+When your app generates output files (images, videos, audio) and returns them through `fal.toolkit.Image` or `fal.toolkit.File`, those are uploaded to fal's CDN and returned as public URLs. CDN files are separate from `/data` storage. To control how long CDN files are retained, see [Media Expiration](../model-apis/media-expiration.md). For small key-value data (configuration, cached API responses, session state), fal also provides [KVStore](use-kv-store.md) which offers faster access for data up to 1.9MB per value.
