@@ -164,49 +164,29 @@ const result = await fal.subscribe("fal-ai/nano-banana-2", {
 
 ## enable\_safety\_checker
 
-Enable or disable the content safety filter on generated outputs. When enabled, fal runs an ML-based classifier on each generated image to detect NSFW content (nudity and sexual content).
+fal enables safety filtering by default. On models that expose `enable_safety_checker`, you can use this input to adjust the filter. fal must authorize your account before `false` can request relaxed filtering. Otherwise, fal keeps filtering on.
+
+Contact [support](mailto:support@fal.ai) to request authorization.
 
 | | |
 | - | - |
 | **Type** | Boolean |
 | **Default** | `true` |
-| **Also accepted as** | `enable_safety_checks` |
-
-Each generated image is analyzed by a classifier after generation. Images flagged as unsafe are replaced with a black image of the same dimensions. The response includes a `has_nsfw_concepts` array indicating which images were flagged, so you can detect and handle filtered outputs in your code.
-
-```json theme={null}
-{
-  "images": [
-    {"url": "https://v3.fal.media/files/...", "width": 1024, "height": 1024},
-    {"url": "https://v3.fal.media/files/...", "width": 1024, "height": 1024}
-  ],
-  "has_nsfw_concepts": [false, true]
-}
-```
-
-In this example, the second image was flagged and replaced with a black image.
 
 ```python Python theme={null}
 result = fal_client.subscribe("fal-ai/nano-banana-2", arguments={
     "prompt": "a sunset",
     "enable_safety_checker": True
 })
-
-if any(result.get("has_nsfw_concepts", [])):
-    print("Some images were filtered by the safety checker")
 ```
 
 ```javascript JavaScript theme={null}
 const result = await fal.subscribe("fal-ai/nano-banana-2", {
   input: { prompt: "a sunset", enable_safety_checker: true }
 });
-
-if (result.has_nsfw_concepts?.some(Boolean)) {
-  console.log("Some images were filtered by the safety checker");
-}
 ```
 
-To disable the safety checker:
+To request relaxed filtering, set the value to `false`:
 
 ```python Python theme={null}
 result = fal_client.subscribe("fal-ai/nano-banana-2", arguments={
@@ -220,10 +200,6 @@ const result = await fal.subscribe("fal-ai/nano-banana-2", {
   input: { prompt: "a sunset", enable_safety_checker: false }
 });
 ```
-
-> [!NOTE]
->
-> Not all models support disabling the safety checker. Check the model's API page (e.g., [Nano Banana 2 API](https://fal.ai/models/fal-ai/nano-banana-2/api)) for the available parameters.
 
 ## enable\_prompt\_expansion
 
