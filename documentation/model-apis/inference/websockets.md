@@ -22,7 +22,9 @@
 
 # HTTP over WebSockets
 
-> For applications that require real-time interaction or handle streaming, fal offers a WebSocket-based integration. This allows you to establish a persistent connection and stream data back and forth between your client and the fal API using the same format as the HTTP endpoints.
+> [!WARNING]
+>
+> **Deprecated.** HTTP over WebSockets (`ws.fal.run`) will stop working on **November 20, 2026**. Migrate to the [standard HTTP endpoint](synchronous.md) or [queue endpoint](queue.md).
 
 For applications that require real-time interaction or handle streaming responses, fal provides a WebSocket-based API. This allows you to establish a persistent connection and stream data between your client and the fal platform.
 

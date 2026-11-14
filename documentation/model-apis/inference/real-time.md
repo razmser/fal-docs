@@ -32,10 +32,6 @@ Unlike [queue-based inference](../inference.md), real-time connections bypass th
 >
 > Only models that explicitly support real-time inference can be used with the realtime client. Standard queue-based models do not have a realtime endpoint.
 
-> [!NOTE]
->
-> If the model you want has no realtime endpoint but you still want a persistent connection, see [HTTP over WebSockets](websockets.md) — it carries a model's ordinary HTTP request and response format over `wss://ws.fal.run/{model_id}`, and works with any endpoint.
-
 ## Supported Models
 
 > [card] [fast-lcm-diffusion](https://fal.ai/models/fal-ai/fast-lcm-diffusion)

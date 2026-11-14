@@ -40,8 +40,6 @@ fal provides five calling patterns that cover the spectrum from quick prototypin
 | **`stream()`** | Progressive output via SSE |
 | **`realtime()`** | WebSocket, persistent connection |
 
-Beyond these five, [HTTP over WebSockets](inference/websockets.md) is a transport variant rather than a sixth pattern: it carries the same request and response format as `run()` over a persistent `wss://ws.fal.run` connection, and unlike `realtime()` it works with any endpoint.
-
 ***
 
 ## Direct (`run`)
