@@ -110,12 +110,12 @@ Outside of a running app, you can upload files to `/data` through the dashboard,
 
 The [Dashboard > Files](https://fal.ai/dashboard/files) page provides a visual interface for dragging and dropping files, uploading from URLs, organizing folders, and managing your stored files.
 
-From the CLI, use `fal files` commands:
+From the CLI, use `fal files` commands with paths under `/data`:
 
 ```bash theme={null}
-fal files list
-fal files list models/
-fal files upload local-file.bin remote-path/file.bin
+fal files list /data
+fal files list /data/models/
+fal files upload local-file.bin /data/remote-path/file.bin
 ```
 
 Uploads do not overwrite. Uploading to a path that already exists returns an error. Remove the existing file first with `fal files rm`.
