@@ -2,7 +2,7 @@
 
 Markdown mirror of [fal.ai's documentation](https://fal.ai/docs/documentation).
 
-Contains **522 pages**, discovered from the [page index](https://fal.ai/docs/llms.txt) and [supplementary index](https://fal.ai/docs/sitemap.xml).
+Contains **523 pages**, discovered from the [page index](https://fal.ai/docs/llms.txt) and [supplementary index](https://fal.ai/docs/sitemap.xml).
 
 Links to mirrored pages point to local files; external links and images remain online. Code examples and OpenAPI blocks are preserved.
 
@@ -173,6 +173,7 @@ Generated files are replaced by the next successful sync. Original content belon
 - [App Lifecycle](documentation/development/app-lifecycle.md)
 - [Application Setup](documentation/development/app-setup.md)
 - [Calling Your Endpoints](documentation/development/calling-your-endpoints.md)
+- [Connect Runners to Your Private Network](documentation/development/connect-to-tailscale.md)
 - [Environment and Runtime](documentation/development/container-setup.md)
 - [Docker Templates and Best Practices](documentation/development/docker-templates.md)
 - [Document Your Model](documentation/development/document-your-model.md)

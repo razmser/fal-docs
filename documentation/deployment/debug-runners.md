@@ -66,6 +66,8 @@ Use `exec` for quick checks or scripted inspection; add `-it` when the command n
 
 Both commands attach to the runner's container environment, so anything your app can see -- environment variables, mounted [persistent storage](../development/use-persistent-storage.md), GPU devices -- is available to you.
 
+To connect with standard SSH tools, for example `scp` or port forwarding, see [Connect Runners to Your Private Network](../development/connect-to-tailscale.md#connect-to-a-runner-with-ssh).
+
 ## Termination Reasons
 
 When a runner begins shutting down, the dashboard shows a termination reason next to its state. Hover over the reason for a short explanation. Some reasons describe normal lifecycle activity, while others indicate an app or infrastructure problem that may need investigation.

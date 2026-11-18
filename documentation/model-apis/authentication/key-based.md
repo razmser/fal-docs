@@ -55,7 +55,7 @@ A preset is a permission list that fal curates for a common case. If you only co
 | `COMPUTE` | Read, create, and delete compute instances. Read and terminate runners. |
 | `BILLING` | Read usage, invoices, contracts, billing settings, the list of keys, and the model catalog. |
 | `READONLY` | Read requests, apps, logs, runners, compute instances, workflows, and usage. This preset grants no write access. It does not read invoices, contracts, billing settings, keys, team members, secrets, environments, or log drains. |
-| `FULL` | Every permission on the account, including private models and all CLI operations. |
+| `FULL` | Every permission on the account except key creation, including private models and the other CLI operations. To create keys, use the dashboard. |
 
 > [!NOTE]
 >

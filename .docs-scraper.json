@@ -163,6 +163,7 @@
     "documentation/development/app-lifecycle.md": "https://fal.ai/docs/documentation/development/app-lifecycle.md",
     "documentation/development/app-setup.md": "https://fal.ai/docs/documentation/development/app-setup.md",
     "documentation/development/calling-your-endpoints.md": "https://fal.ai/docs/documentation/development/calling-your-endpoints.md",
+    "documentation/development/connect-to-tailscale.md": "https://fal.ai/docs/documentation/development/connect-to-tailscale.md",
     "documentation/development/container-setup.md": "https://fal.ai/docs/documentation/development/container-setup.md",
     "documentation/development/docker-templates.md": "https://fal.ai/docs/documentation/development/docker-templates.md",
     "documentation/development/document-your-model.md": "https://fal.ai/docs/documentation/development/document-your-model.md",

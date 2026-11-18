@@ -31,18 +31,15 @@ or `permissions` to list them explicitly; omit both to get the `API` preset.
 The `key_secret` is only returned once at creation time. Store it securely immediately
 as it cannot be retrieved again. If lost, you must delete the key and create a new one.
 
+**Key Creation Access:**
+API keys cannot create keys, even on the `FULL` preset. This endpoint returns
+`403` for an API key. Create keys in the [dashboard](https://fal.ai/dashboard/keys) instead.
+
 **Key Features:**
-- Create API keys programmatically without UI access
 - Assign meaningful aliases for key identification
 - Scope a key with a named preset or an explicit list of permissions
 - Optionally set an expiry with `expires_at`
 - Keys are immediately active upon creation
-
-**Common Use Cases:**
-- Programmatic key provisioning for CI/CD pipelines
-- Self-serve key generation for team members
-- Automated key rotation workflows
-- Integration with secret management systems
 
 **Required permissions:** `auth:keys:write`. Key presets that include them: `FULL`. See [key permissions](../../../documentation/model-apis/authentication/key-based.md#permissions).
 
@@ -86,9 +83,16 @@ paths:
         create a new one.
 
 
-        **Key Features:**
+        **Key Creation Access:**
 
-        - Create API keys programmatically without UI access
+        API keys cannot create keys, even on the `FULL` preset. This endpoint
+        returns
+
+        `403` for an API key. Create keys in the
+        [dashboard](https://fal.ai/dashboard/keys) instead.
+
+
+        **Key Features:**
 
         - Assign meaningful aliases for key identification
 
@@ -97,17 +101,6 @@ paths:
         - Optionally set an expiry with `expires_at`
 
         - Keys are immediately active upon creation
-
-
-        **Common Use Cases:**
-
-        - Programmatic key provisioning for CI/CD pipelines
-
-        - Self-serve key generation for team members
-
-        - Automated key rotation workflows
-
-        - Integration with secret management systems
 
 
         **Required permissions:** `auth:keys:write`. Key presets that include

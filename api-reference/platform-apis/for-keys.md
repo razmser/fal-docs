@@ -50,4 +50,8 @@ To create a key, send a `preset` or a `permissions` list. If you send neither, t
 
 > [!NOTE]
 >
-> To list keys, use a key on the `BILLING` or `FULL` preset. To create or revoke a key, use a key on the `FULL` preset. A custom policy key with the same permissions also works. For more information, see [Key permissions](../../documentation/model-apis/authentication/key-based.md#permissions).
+> To list keys, use a key on the `BILLING` or `FULL` preset. To revoke a key, use a key on the `FULL` preset. A custom policy key with the same permissions also works. For more information, see [Key permissions](../../documentation/model-apis/authentication/key-based.md#permissions).
+
+> [!WARNING]
+>
+> API keys cannot create keys, even on the `FULL` preset. A create request with an API key returns `403`. Create keys in the [dashboard](https://fal.ai/dashboard/keys) instead.
