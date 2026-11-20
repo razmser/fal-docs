@@ -76,7 +76,7 @@ These policies are configured from the Organization dashboard and apply across a
 
 ## Billing Across Teams
 
-Each team in an organization maintains its own billing and subscription. Org admins with billing access can view invoices across all teams from the Organization dashboard, set spending alerts for any team, and monitor usage analytics across the organization (when cross-team visibility is enabled).
+Each team in an organization maintains its own billing and subscription. Org admins with billing access can view invoices across all teams from the Organization dashboard, set [spending alerts](spending-controls.md) for any team, and monitor usage analytics across the organization (when cross-team visibility is enabled).
 
 > [card] [Model Access Controls](access-controls.md)
 >

@@ -158,7 +158,7 @@ Tag reporting covers authenticated, per-request-billed calls to fal Model APIs. 
 
 These paths do not report tagged cost.
 
-* **[Realtime](inference/real-time.md) and [WebSocket](inference/websockets.md) connections.** fal does not capture tags on a WebSocket connection.
+* **[Realtime](inference/real-time.md) connections.** fal does not capture tags on a WebSocket connection.
 * **Your own deployed apps.** fal captures the tags on the request. Per-request cost attribution for a deployed app is not available yet.
 
 ***
