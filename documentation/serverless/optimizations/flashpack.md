@@ -54,7 +54,7 @@ from flashpack import pack_to_file, assign_from_file
 flashpack_path = "/data/models/my-model.flashpack"
 model = MyModel(...)
 
-pack_to_file(model, flashpack_path)
+pack_to_file(model, flashpack_path, target_dtype=None)
 assign_from_file(model, flashpack_path)
 ```
 
@@ -103,7 +103,7 @@ sdxl_vae.save_pretrained_flashpack(
 # Load from FlashPack
 sdxl_vae = FlashPackAutoencoderKL.from_pretrained_flashpack(
     "my-org/sdxl-vae-flashpack",
-    device_map="cuda",
+    device="cuda",
 )
 ```
 
@@ -133,7 +133,7 @@ clip.save_pretrained_flashpack(
 # Load from FlashPack
 clip = FlashPackCLIPTextModel.from_pretrained_flashpack(
     "my-org/sdxl-text-encoder-flashpack",
-    device_map="cuda",
+    device="cuda",
 )
 ```
 

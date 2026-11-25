@@ -126,7 +126,7 @@ class MyApp(fal.App):
 
 ## `startup_timeout`
 
-**Default:** Varies
+**Default:** 600 seconds
 
 Maximum time allowed for `setup()` to complete.
 
@@ -149,7 +149,7 @@ To reset all parameters back to code values, deploy with `--reset-scale`:
 fal deploy --reset-scale
 ```
 
-> [card] [Deploy Behavior & Priority](../../deployment/scale-your-application.md#deploy-behavior-and---reset-scale)
+> [card] [Deploy Behavior & Priority](../../deployment/scaling-configuration.md#how-parameters-behave-across-deploys)
 >
 > Full explanation of how code, CLI, and dashboard settings interact
 

@@ -95,7 +95,7 @@ Start with `OTEL_SAMPLE_RATE=0.1` under heavy load and increase it if you need m
 processor = BatchSpanProcessor(
     OTLPSpanExporter(),
     # Drop oldest spans when the in-memory queue is full.
-    # Increase this if you see "SpanProcessor queue is full" warnings.
+    # Increase this if you see "Queue full, dropping Span." warnings.
     max_queue_size=2048,
     # Spans per HTTP request to the collector.
     # Larger batches reduce request overhead at the cost of higher memory use.
@@ -116,7 +116,7 @@ processor = BatchSpanProcessor(
 
 ## Flushing on Shutdown
 
-fal gives runners a 5-second grace period between `SIGTERM` and `SIGKILL`. `teardown()` runs during that window, after all in-flight requests finish. See [App Lifecycle](../../development/app-lifecycle.md) for the full shutdown sequence.
+By default, fal gives runners a 5-second grace period between `SIGTERM` and `SIGKILL`. You can change it with the `termination_grace_period_seconds` property. `teardown()` runs during that window, after all in-flight requests finish. See [App Lifecycle](../../development/app-lifecycle.md) for the full shutdown sequence.
 
 Call `force_flush()` in `teardown()`, not in your endpoint handler. Per-request flushing adds latency on every call; `BatchSpanProcessor` handles periodic exports on its own schedule.
 

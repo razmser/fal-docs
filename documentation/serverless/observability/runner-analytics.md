@@ -46,7 +46,7 @@ Clicking a runner opens a side sheet with everything you need to debug it:
 * **Cold start timeline** -- a stage-by-stage visualization of the runner's startup, making it obvious whether the delay came from allocation, docker pull, or your setup code.
 * **Telemetry** -- CPU, memory, GPU utilization, and VRAM usage over time, each as its own chart. GPU utilization shows the average compute load across the runner's GPUs, while VRAM shows GPU memory usage -- together they let you tell a compute-bound runner apart from a memory-bound one, and spot resource exhaustion (for example, an out-of-memory condition).
 * **Logs** -- the full log timeline filtered to that runner ID, from spin-up through request execution, so errors like CUDA out-of-memory are easy to find in context.
-* **Connect** -- SSH into an active runner with [`fal runners shell`](../../../api-reference/cli/runners.md#shell) to inspect the live environment (for example, run `nvidia-smi` to check driver specs and VRAM in real time). Available for active runners only.
+* **Connect** -- open a shell on an active runner with [`fal runners shell`](../../../api-reference/cli/runners.md#shell) to inspect the live environment (for example, run `nvidia-smi` to check driver specs and VRAM in real time). Available for active runners only.
 * **Termination reason and error type** -- see why a runner was terminated (for example, a runner error) directly in the header.
 
 ## Managing Runners

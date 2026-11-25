@@ -24,7 +24,7 @@
 
 > How fal retries failed requests, what each status code does to runners, and how to control behavior with response headers.
 
-When a request fails while being processed through the [queue](../../model-apis/inference/queue.md), fal automatically retries it on a new runner. This covers infrastructure-level failures like runner crashes, network issues, and timeouts. Retries happen transparently, up to 10 attempts, before the request is marked as failed. Direct calls via `run()` and `stream()` (without the queue) are never retried.
+When a request fails while being processed through the [queue](../../model-apis/inference/queue.md), fal automatically retries it on a new runner. This covers infrastructure-level failures like runner crashes, network issues, and timeouts. Retries happen transparently, up to 10 attempts, before the request is marked as failed. fal does not retry direct calls via `run()` and `stream()` (without the queue). The Python client retries `run()` on its side, up to 10 times, for some errors. See [Concurrency Limits](../../model-apis/concurrency-limits.md).
 
 The status code your endpoint returns determines whether the runner stays alive, whether the request is retried, and how the platform reacts. Returning the wrong code can kill a healthy runner or prevent a retry that should happen. When a request does fail, the response includes an `error_type` field and `X-Fal-Error-Type` header with a machine-readable category (e.g. `request_timeout`, `runner_disconnected`) that you can use for programmatic retry logic and monitoring. See [Request Error Types](../../model-apis/request-errors.md) for the full reference.
 
