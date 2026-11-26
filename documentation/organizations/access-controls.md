@@ -77,7 +77,7 @@ You can opt in to receive email notifications when new models are designated as 
 
 > [!NOTE]
 >
-> Model Access Controls are available on enterprise plans. Contact [sales](https://fal.ai/enterprise#contact-sales) to enable this feature for your organization.
+> Model Access Controls are available on enterprise plans. Contact [sales](https://fal.ai/enterprise#contact-sales) to enable this feature for your organization. To limit spend instead of model choice, see [Spending Controls](spending-controls.md).
 
 > [card] [Managing Teams](managing-teams.md)
 >

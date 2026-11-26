@@ -43,7 +43,7 @@ Each child team operates independently for day-to-day work. The organization con
 
 ## What Org Admins Can Do
 
-Organization admins have centralized control over the full team lifecycle. They can create and archive teams, view and manage members across all teams (roles, assignments, invites), and configure policies that apply organization-wide. On the billing side, org admins can view invoices across all teams and set spending alerts. For security, they can enforce SSO for all team members and restrict which models teams can access via the API or Playground.
+Organization admins have centralized control over the full team lifecycle. They can create and archive teams, view and manage members across all teams (roles, assignments, invites), and configure policies that apply organization-wide. On the billing side, org admins can view invoices across all teams. When Cross-Team Visibility is enabled, they can also set [spending controls](organizations/spending-controls.md) for any team. For security, they can enforce SSO for all team members and restrict which models teams can access via the API or Playground.
 
 ## Request Visibility
 

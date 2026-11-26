@@ -68,7 +68,7 @@ If no preset matches your case, select the exact permissions the key needs. A cu
 
 ### Allowed models
 
-You can limit a key to a list of models in the **Allowed models** tab when you create the key. You cannot change the limit after creation. A key with this limit can only call the models on the list.
+You can limit a key to a list of models in the **Allowed models** tab when you create the key. You cannot change the limit after creation. A key with this limit can only call the models on the list. To limit how much a key can spend, see [Spending Controls](../../organizations/spending-controls.md).
 
 > [!WARNING]
 >

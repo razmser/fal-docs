@@ -46,7 +46,7 @@ Every team member has one of five roles. The role determines what they can acces
 | - | - |
 | **Admin** | Full team management: invite and remove members, manage API keys, configure scaling, set up [log drains](../serverless/observability/log-drains.md), and access all team settings. |
 | **Developer** | Deploy and manage apps, view analytics, access logs, and use the API. This is the default role for new members. |
-| **Billing** | Everything a Developer can do, plus billing: invoices, payment methods, spending alerts, and usage analytics. Can view API keys but cannot create or delete them. Cannot manage members. |
+| **Billing** | Everything a Developer can do, plus billing: invoices, payment methods, [spending controls](spending-controls.md), and usage analytics. Can view API keys but cannot create or delete them. Cannot manage members. |
 | **Creator** | Use Playground, Sandbox, and Workflows. Cannot view request logs or manage API keys, billing, members, or roles. |
 | **Viewer** | Read-only access to team resources. Can view request logs and the library. Cannot run models, change anything, or manage API keys, billing, members, or roles. |
 
@@ -70,13 +70,13 @@ These policies are configured from the Organization dashboard and apply across a
 | - | - |
 | **Team Creation** | Whether child team admins can create new teams, or only org admins can. |
 | **Invite Permissions** | Whether child team admins can invite new members, or all invitations must go through org admins. |
-| **Cross-Team Visibility** | Whether admins and billing managers can see analytics and usage across all teams, not just their own. |
+| **Cross-Team Visibility** | Whether admins and billing managers can see analytics and usage, and set [spending controls](spending-controls.md), across all teams, not just their own. |
 | **Request Visibility** | Whether team members see all requests made by their team, or only their own. Useful for organizations handling sensitive data. |
 | **SSO Account Visibility** | Whether users can access their personal fal account alongside their SSO-linked team account. Disabling this ensures users only interact through the organization's teams. |
 
 ## Billing Across Teams
 
-Each team in an organization maintains its own billing and subscription. Org admins with billing access can view invoices across all teams from the Organization dashboard, set [spending alerts](spending-controls.md) for any team, and monitor usage analytics across the organization (when cross-team visibility is enabled).
+Each team in an organization maintains its own billing and subscription. Org admins with billing access can view invoices across all teams from the Organization dashboard. When cross-team visibility is enabled, they can also set [spending controls](spending-controls.md) for any team and monitor usage analytics across the organization.
 
 > [card] [Model Access Controls](access-controls.md)
 >

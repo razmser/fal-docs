@@ -90,7 +90,7 @@ Enterprise customers can receive custom per-endpoint pricing and volume discount
 
 ## Monitoring Your Usage
 
-The billing dashboard shows your overall spend, invoices, and payment history. For per-model cost breakdowns and request-level detail, use the usage and analytics Platform APIs, or check the billing reports available in the dashboard.
+The billing dashboard shows your overall spend, invoices, and payment history. For per-model cost breakdowns and request-level detail, use the usage and analytics Platform APIs, or check the billing reports available in the dashboard. To get alerts or block new requests when spend crosses a threshold, use [Spending Controls](../organizations/spending-controls.md).
 
 > [card] [Dashboard Billing](https://fal.ai/dashboard/billing)
 >

@@ -44,7 +44,7 @@ Common questions about using fal. If you can't find the answer here, join our [D
 
 > [accordion] What happens when my credits run out?
 >
-> When your credit balance drops below your account's lock threshold, your account is locked and API requests will be rejected. Add credits from the [billing dashboard](https://fal.ai/dashboard/billing) to unlock your account. Enterprise customers on invoice-based billing are not subject to automatic locking.
+> When your credit balance drops below your account's lock threshold, your account is locked and API requests will be rejected. Add credits from the [billing dashboard](https://fal.ai/dashboard/billing) to unlock your account. Enterprise customers on invoice-based billing are not subject to automatic locking. Enterprise teams can opt in to spend-based alerts and auto-lock with [Spending Controls](../organizations/spending-controls.md).
 
 > [accordion] How long are generated files stored?
 >

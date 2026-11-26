@@ -22,60 +22,108 @@
 
 # Spending Controls
 
-> Get an alert when usage costs cross a threshold, and block new requests to stop more costs.
+> Set spend thresholds on API keys, teams, and members. Get email alerts and optionally lock requests automatically.
 
-Spending controls help you monitor and limit your usage costs on fal. There are two types of control.
-
-* An **alert** notifies you when your usage costs cross a threshold in a daily, weekly, or monthly period.
-* A **lock** blocks new requests. Requests that are already running continue to completion.
-
-You can set a control on a whole team, on one API key, or on one team member. Members with the Admin or Billing role can manage spending controls. In an organization with cross-team visibility, these members can manage the controls for every team from one page.
+Spending Controls lets you set a threshold on how much your team spends in a period. When spend crosses the threshold, fal sends an email alert. You can also turn on auto-lock to block new requests. Use a threshold to watch spend for one API key, one member, or the team.
 
 > [!NOTE]
 >
-> fal must enable spending controls for your account. fal enables locks separately. Contact [support@fal.ai](mailto:support@fal.ai) to request access.
+> Spending Controls is available on enterprise plans. fal enables it on request. Contact your account team or [support@fal.ai](mailto:support@fal.ai).
 
-Open [Spending Controls](https://fal.ai/dashboard/usage-billing/spending-controls) from **Settings** > **Usage & Billing**.
+A threshold counts model API usage only. This includes usage in the dashboard, such as the Playground. SDK and other charges do not count toward a threshold.
 
-![The Spending controls page with the Add alert and Add lock buttons](https://mintcdn.com/fal-d8505a2e/SyOpEnehPAp3oqf0/images/spending-controls/empty-state.png?fit=max\&auto=format\&n=SyOpEnehPAp3oqf0\&q=85\&s=8c1cbaa2bd7f4fed9c0e952592d7aa9f)
+## Scope and Period
 
-## Set Up an Alert
+Each threshold applies to one of these scopes:
 
-1. Click **Add alert**.
-2. In an organization, select the team.
-3. Select the subject. The subject is the whole team, one API key, or one member.
-4. Select the period.
-5. Enter the threshold amount.
-6. Optional: turn on **Auto-lock** to block new requests when costs reach the threshold.
-7. Click **Create alert**.
+| Scope | What the threshold measures |
+| :- | :- |
+| **Team** | Spend from the team |
+| **API key** | Spend from requests made with one API key |
+| **Member** | Spend from one team member's logged-in usage, such as the Playground and Sandbox. It does not include requests made with API keys. |
 
-The chart in the panel shows the costs for the last two periods. Use it to compare the threshold with your usual costs.
+On a personal account, the **Team** option is labeled **Account**. A personal account has no **Member** option.
 
-![The Add spending alert panel with the Engineering team, a monthly period, and a \$5,000 threshold](https://mintcdn.com/fal-d8505a2e/SyOpEnehPAp3oqf0/images/spending-controls/add-alert-sheet.png?fit=max\&auto=format\&n=SyOpEnehPAp3oqf0\&q=85\&s=11288afbebc8f9afe919a9ac3ea60464)
+Each threshold also has a period: **daily**, **weekly**, or **monthly**. Periods are calendar periods in UTC. A daily period resets at 12:00 AM UTC. A weekly period resets on Monday. A monthly period resets on the first day of the month.
 
-The new alert shows in the list. The bar shows the percentage of the threshold that the subject uses in the current period.
+Each team, API key, or member can have one threshold for each period. You cannot change the scope or period of a threshold after you create it. To change them, delete the threshold and create a new one.
 
-![The Engineering team alert at 60% of its monthly threshold](https://mintcdn.com/fal-d8505a2e/SyOpEnehPAp3oqf0/images/spending-controls/alert-row.png?fit=max\&auto=format\&n=SyOpEnehPAp3oqf0\&q=85\&s=4bde10f108ed3a2cd02733897e80299f)
+## Manage Spending Controls
 
-Alerts on a team or API key show in your dashboard notifications. fal emails an alert on one member to the members with the Admin role.
+Open [Spending Controls](https://fal.ai/dashboard/usage-billing/spending-controls) in the dashboard (**Usage & Billing → Spending Controls**). Members with the [Admin or Billing role](managing-teams.md#team-roles) and the owner of a personal account can open it. When [Cross-Team Visibility](managing-teams.md#organization-policies) is on, members with the Admin or Billing role can open it for any team.
 
-Periods reset at 12:00 AM UTC. Alerts count model API usage only.
+![The Spending Controls page with one monthly threshold on an API key and the Add alert and Add lock buttons](https://mintcdn.com/fal-d8505a2e/w5vRfVIivKAZIbVP/images/spending-controls/list-view.png?fit=max\&auto=format\&n=w5vRfVIivKAZIbVP\&q=85\&s=e80d98c9fa3dee18eb03a5feeccb3316)
 
-## Set Up a Lock
+## Create a Threshold
 
-1. Click **Add lock**.
-2. In an organization, select the team.
-3. Select the subject.
-4. Enter an internal note. Members with the Admin or Billing role can see this note.
-5. Select when the lock ends.
-6. Click **Lock now**.
+**1. Open the create panel**
 
-![The Add spending lock panel for the batch-jobs API key, with a note and an end-of-month end date](https://mintcdn.com/fal-d8505a2e/SyOpEnehPAp3oqf0/images/spending-controls/add-lock-sheet.png?fit=max\&auto=format\&n=SyOpEnehPAp3oqf0\&q=85\&s=9871c99eb3c23c5b6b6828f4fc94dfc5)
+On the Spending Controls page, select **Add alert**.
 
-The page shows each lock that blocks requests.
+**2. Choose the subject**
 
-![A lock on the batch-jobs API key that blocks new requests](https://mintcdn.com/fal-d8505a2e/SyOpEnehPAp3oqf0/images/spending-controls/active-lock.png?fit=max\&auto=format\&n=SyOpEnehPAp3oqf0\&q=85\&s=a6ce6d91204818b36593574ac3f6eaf3)
+Select **Team**, **API key**, or **Member**. Then pick the specific API key or member. If you work across teams with the Admin or Billing role, pick the team first. On a personal account, select **Account** or **API key**. fal sends alerts for a member threshold to the team admins, not to the member.
 
-## Remove a Lock
+**3. Set the amount and period**
 
-To remove all locks, click **Unlock all**. To remove one lock, expand its row. Then click **Unlock**.
+Enter an amount in USD that is greater than 0. Then select daily, weekly, or monthly.
+
+**4. Choose the action**
+
+Leave auto-lock off to receive email alerts only. Turn it on to also block new requests when spend crosses the threshold. If you do not see the auto-lock option, your team cannot use locks.
+
+**5. Save**
+
+Select **Create alert**.
+
+![The Add spending alert panel with an API key, a weekly period, a threshold amount, and the auto-lock toggle turned on. Periods that already have a threshold are greyed out.](https://mintcdn.com/fal-d8505a2e/w5vRfVIivKAZIbVP/images/spending-controls/create-alert-auto-lock.png?fit=max\&auto=format\&n=w5vRfVIivKAZIbVP\&q=85\&s=fa40f5a5e187a61e9df1c77a871b22ec)
+
+To review or change a threshold, expand its row. The row shows a cumulative spend chart for the current period and a **Controls** panel. In the panel, use the toggle to turn a threshold on or off. Use the **...** menu to edit or delete it.
+
+![An expanded row for an API key threshold, showing the cumulative spend chart (empty, with no usage yet) and the Controls panel with a monthly \$500 threshold](https://mintcdn.com/fal-d8505a2e/w5vRfVIivKAZIbVP/images/spending-controls/api-key-alert.png?fit=max\&auto=format\&n=w5vRfVIivKAZIbVP\&q=85\&s=855db099ed441eb44dea8a4ed4881df7)
+
+## Auto-Lock
+
+When spend crosses a threshold that has auto-lock, fal blocks new API requests for that scope.
+
+Auto-lock does not set an exact-dollar cap, for these reasons:
+
+* A lock takes about one minute to take effect after spend crosses the threshold.
+* A lock does not stop requests that are already running.
+
+Because of this, spend can go above the threshold. Set the threshold below your real limit to leave room.
+
+Keep these rules in mind:
+
+* A threshold fires once per period. This applies to both the email alert and the auto-lock.
+* Auto-lock does not fire while a manual lock is active on the same team, API key, or member.
+* To lift a lock, select **Unlock** in the dashboard. Unlocking does not re-arm the threshold.
+
+To let a threshold fire again in the same period:
+
+1. If a lock is active, select **Unlock**.
+2. Edit the threshold.
+3. Turn on **Let this alert fire again this period**.
+
+Otherwise, the threshold re-arms at the next period.
+
+## Manual Locks
+
+You can also lock a team, an API key, or a member by hand. On a personal account, you can lock the account or an API key. A manual lock blocks new requests for that scope.
+
+To add a lock, select **Add lock** on the Spending Controls page. Then:
+
+* Enter an internal note. The note is required and is visible to members with the Admin or Billing role.
+* Choose when the lock ends. The default is the end of the month (UTC).
+
+If you do not see **Add lock**, your team cannot use locks.
+
+## Related
+
+> [card] [Model Access Controls](access-controls.md)
+>
+> Restrict which models your team can call.
+
+> [card] [Pricing](../model-apis/pricing.md)
+>
+> Learn how fal bills for usage.
