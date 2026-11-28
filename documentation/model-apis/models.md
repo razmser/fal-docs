@@ -108,7 +108,6 @@ Transcribe speech, convert voices, and transform audio.
 | **Demucs** [API](https://fal.ai/models/fal-ai/demucs/api) · [Model page](https://fal.ai/models/fal-ai/demucs) | Source-separation model, for splitting vocals, drums, bass, and other stems | `fal-ai/demucs` | Audio → Audio |
 | **Resemble AI Chatterbox HD Speech to Speech** [API](https://fal.ai/models/resemble-ai/chatterboxhd/speech-to-speech/api) · [Model page](https://fal.ai/models/resemble-ai/chatterboxhd/speech-to-speech) | Resemble AI Chatterbox, for voice conversion with built-in watermarking | `resemble-ai/chatterboxhd/speech-to-speech` | Audio → Audio |
 | **Wizper (Whisper v3, fal edition)** [API](https://fal.ai/models/fal-ai/wizper/api) · [Model page](https://fal.ai/models/fal-ai/wizper) | fal-optimized Whisper v3 Large, with the same accuracy at about twice the speed | `fal-ai/wizper` | Audio → Text |
-| **Silero VAD** [API](https://fal.ai/models/fal-ai/silero-vad/api) · [Model page](https://fal.ai/models/fal-ai/silero-vad) | Lightweight voice activity detector, for speech timestamps | `fal-ai/silero-vad` | Audio → Text |
 
 ## Vision
 

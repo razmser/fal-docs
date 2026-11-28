@@ -58,7 +58,7 @@
 
 > [accordion] Is there an API or SDK for fal Agent?
 >
-> Not yet. fal Agent is available in the browser at [fal.ai/agent](https://fal.ai/agent). For programmatic generation today, use the [Model APIs](../model-apis/overview.md), the [MCP server](../setting-up/mcp.md), or the [genmedia CLI](../setting-up/genmedia.md).
+> Yes. The [Agent SDK](sdk.md) connects JavaScript and TypeScript applications to the same fal Agent you use at [fal.ai/agent](https://fal.ai/agent). It is in alpha. To call a specific model directly, use the [Model APIs](../model-apis/overview.md), the [MCP server](../setting-up/mcp.md), or the [genmedia CLI](../setting-up/genmedia.md).
 
 > [accordion] Does fal Agent work on mobile?
 >
